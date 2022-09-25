@@ -1,60 +1,15 @@
-
-const EnvType = {
-    Int: 'Int',
-    Float: 'Float',
-    String: 'String',
-    Boolean: 'Boolean',
-}
-
-const env = (key, type = EnvType.String, required = true) => {
-    
-    if (!key)
-        throw new Error(`Param "key" is required, given: ${key}`)
-    
-    if (!type)
-        throw new Error(`Param "tyoe" is required, given: ${type}`)
-    
-    if (!Object.keys(EnvType).includes(type))
-        throw new Error(`Invalid type "${type}" - must be one of ${Object.keys(EnvType).join(', ')}`)
-    
-    let value = process.env[key]
-    
-    try {
-        
-        switch (type) {
-            case EnvType.Int:
-                value = parseInt(value, 10)
-                break
-            case EnvType.Float:
-                value = parseFloat(value)
-                break
-            case EnvType.Boolean:
-                value = value.toLowerCase() === 'true'
-                break
-        }
-        
-    } catch (e) {
-        
-        const message = `Failed to parse environment variable "${key}" as ${type}`
-        
-        console.error(message, e)
-        console.log('Available environment variables', JSON.stringify(Object.keys(process.env).sort(), null, 4))
-        throw new Error(message)
-        
-    }
-    
-    if (required && typeof value === undefined || value === null)
-        throw new Error(`Environment variable ${key} (${type}) is required, given: ${value} (${typeof value})`)
-    
-    return value
-    
-}
+import * as path from 'path'
+import { EnvType, env } from '@utils/env'
 
 const config = {
     host: env('HOST', EnvType.String),
     port: env('PORT', EnvType.Int),
+    root: path.resolve(__dirname, '..'),
     log: {
         level: env('LOG_LEVEL', EnvType.String),
+        events: {
+            requests: env('LOG_REQUESTS', EnvType.Boolean, false, true),
+        },
     },
     cors: {
         logRequests: env('CORS_LOG_REQUESTS', EnvType.Boolean),
@@ -64,6 +19,45 @@ const config = {
             file: env('CORS_WHITELIST_FILE', EnvType.String),
         },
     },
+    security: {
+        tokenSecret: env('TOKEN_SECRET', EnvType.String),
+    },
+    database: {
+        type: env('DB_TYPE', EnvType.EnumString, true, {
+            strict: true,
+            values: ['sqlite', 'postgres'],
+        }),
+        sqliteFile: env('SQLITE_FILE', EnvType.String, false),
+        host: env('DB_HOST', EnvType.String, false),
+        port: env('DB_PORT', EnvType.Int, false),
+        user: env('DB_USER', EnvType.String, false),
+        password: env('DB_PASSWORD', EnvType.String, false),
+        database: env('DB_DATABASE', EnvType.String, false),
+        timestampFormat: 'YYYY-MM-DDTHH:mm:ssZ',
+    },
+    misc: {
+        signupInviteRequired: env('SIGNUP_INVITE_REQUIRED', EnvType.Boolean, false),
+    },
+}
+
+// Post initialization tasks
+
+// If SQLite selected, a file must be specified
+if (config.database.type === 'sqlite') {
+    
+    if (!config.database.sqliteFile?.length)
+        throw new Error('Database type set to SQLite, but no SQLITE_FILE value given')
+    
+} else {
+    
+    if (!parseInt(config.database.port, 10))
+        throw new Error('Invalid database port')
+    
+    ['host', 'user', 'password', 'database'].forEach(it => {
+        if (!config.database[it]?.length)
+            throw new Error(`Invalid database value for "${it}`)
+    })
+    
 }
 
 export default config

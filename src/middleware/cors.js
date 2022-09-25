@@ -1,5 +1,6 @@
+import * as fs from 'fs'
 import cors from 'cors'
-import config from '@/config'
+import config from '@config'
 import logger from '@utils/logger'
 
 const log = logger('middleware/cors')

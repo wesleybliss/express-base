@@ -1,4 +1,5 @@
 import '@/env'
+import '@db'
 import logger from '@utils/logger'
 
 const log = logger('index')
