@@ -31,7 +31,7 @@ export class Project extends BaseModel {
     }
     
     static get publicFields() {
-        return ['id', 'user_id', 'name'].map(it => `${this.tableName}.${it}`)
+        return ['id', 'created_at', 'updated_at', 'user_id', 'name'].map(it => `${this.tableName}.${it}`)
     }
     
 }
