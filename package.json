@@ -19,27 +19,27 @@
     "admin:fetch": "babel-node bin/fetch"
   },
   "dependencies": {
-    "@babel/cli": "^7.17.10",
-    "@babel/core": "^7.17.10",
-    "@babel/node": "^7.17.10",
-    "@babel/preset-env": "^7.17.10",
+    "@babel/cli": "^7.23.9",
+    "@babel/core": "^7.24.0",
+    "@babel/node": "^7.23.9",
+    "@babel/preset-env": "^7.24.0",
     "bcryptjs": "^2.4.3",
-    "better-sqlite3": "^7.6.2",
-    "body-parser": "^1.20.0",
+    "better-sqlite3": "^9.4.3",
+    "body-parser": "^1.20.2",
     "cors": "^2.8.5",
-    "dayjs": "^1.11.5",
-    "dotenv": "^16.0.0",
-    "express": "^4.18.1",
+    "dayjs": "^1.11.10",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.3",
     "express-bearer-token": "^2.4.0",
-    "jsonwebtoken": "^8.5.1",
-    "knex": "^2.3.0",
-    "objection": "^3.0.1",
-    "pino": "^7.11.0",
-    "pino-pretty": "^7.6.1",
-    "uuid": "^9.0.0"
+    "jsonwebtoken": "^9.0.2",
+    "knex": "^3.1.0",
+    "objection": "^3.1.4",
+    "pino": "^8.19.0",
+    "pino-pretty": "^10.3.1",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "babel-plugin-module-resolver": "^4.1.0",
-    "nodemon": "^2.0.16"
+    "babel-plugin-module-resolver": "^5.0.0",
+    "nodemon": "^3.1.0"
   }
 }
