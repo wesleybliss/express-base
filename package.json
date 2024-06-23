@@ -1,30 +1,22 @@
 {
-  "name": "express-base",
+  "name": "sojourn-api",
   "version": "1.0.0",
+  "private": true,
   "main": "index.js",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "scripts": {
     "start": "npx babel-node src/index.js",
     "dev": "npx nodemon --watch src --exec babel-node src/index.js",
     "clean": "rm -rf dist; mkdir dist",
-    "build": "yarn clean; babel -d ./dist ./src",
-    "db:migrate:new": "knex migrate:make",
-    "db:migrate": "knex migrate:latest",
-    "db:migrate:undo": "knex migrate:rollback",
-    "db:migrate:undo:all": "knex migrate:rollback --all",
-    "admin:users:list": "babel-node bin/listUsers",
-    "admin:users:create": "babel-node bin/createUser",
-    "admin:users:delete": "babel-node bin/deleteUsers",
-    "admin:invites:create": "babel-node bin/createInvite",
-    "admin:fetch": "babel-node bin/fetch"
+    "build": "yarn clean; babel -d ./dist ./src"
   },
   "dependencies": {
     "@babel/cli": "^7.23.9",
     "@babel/core": "^7.24.0",
     "@babel/node": "^7.23.9",
     "@babel/preset-env": "^7.24.0",
+    "@prisma/client": "^5.10.2",
     "bcryptjs": "^2.4.3",
-    "better-sqlite3": "^9.4.3",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dayjs": "^1.11.10",
@@ -32,11 +24,9 @@
     "express": "^4.18.3",
     "express-bearer-token": "^2.4.0",
     "jsonwebtoken": "^9.0.2",
-    "knex": "^3.1.0",
-    "objection": "^3.1.4",
     "pino": "^8.19.0",
     "pino-pretty": "^10.3.1",
-    "uuid": "^9.0.1"
+    "prisma": "^5.10.2"
   },
   "devDependencies": {
     "babel-plugin-module-resolver": "^5.0.0",
